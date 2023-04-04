@@ -1,15 +1,13 @@
 const hre = require("hardhat");
 
 async function main() {
-  const Lock = await hre.ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy();
+  const Messenger = await hre.ethers.getContractFactory("Messenger");
+  const messenger = await Messenger.deploy();
 
-  await lock.deployed();
+  await messenger.deployed();
 
   console.log(
-    `Lock with ${ethers.utils.formatEther(
-      lockedAmount
-    )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
+    `Contract Address: ${messenger.address}`
   );
 }
 
