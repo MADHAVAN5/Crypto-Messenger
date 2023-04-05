@@ -16,7 +16,7 @@ export const CheckIfWalletConnected = async () => {
     }
 };
 
-export const connnectWallet = async() => {
+export const connectWallet = async() => {
     try {
         if (!window.ethereum) return console.log("Install Matamask");
         const accounts = await window.ethereum.request({
@@ -31,7 +31,7 @@ export const connnectWallet = async() => {
 
 const fetchContract = (signerOrProvider) => new ethers.Contract(MessengerABI, MessengerAddress, signerOrProvider);
 
-export const connnectWithContract = async () => {
+export const connectWithContract = async () => {
     try {
         const web3modal = new Web3Modal();
         const connection = await web3modal.connect();

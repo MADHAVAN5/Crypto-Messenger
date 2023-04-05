@@ -1,9 +1,16 @@
-import '@/styles/globals.css'
-import "../utils/apiFeature"
-const App = ({ Component, pageProps }) => {
-  <div>
-    <Component {...pageProps} />
-  </div>
-};
+// import '@/styles/globals.css'
 
-export default App;
+//internal import
+import { MessengerProvider } from '../context/MessengerContext';
+import { Navbar } from '../components/index';
+
+const MyApp = ({ Component, pageProps }) => (
+  <div>
+    <MessengerProvider>
+      <Navbar/>
+      <Component {...pageProps} />
+    </MessengerProvider>
+  </div>
+);
+
+export default MyApp;

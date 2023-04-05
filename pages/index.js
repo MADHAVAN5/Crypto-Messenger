@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState, useContext } from 'react';
 
-const CryptoMessenger = () => {
-  return (
-    <div>
-      hi
-    </div>
-  )
-}
+//internal import 
 
-export default CryptoMessenger
+import { MessengerContext } from '../context/MessengerContext';
+
+const Messenger = () => {
+  const {} = useContext(MessengerContext);
+  return <div>hi</div>;
+};
+
+export default Messenger;
