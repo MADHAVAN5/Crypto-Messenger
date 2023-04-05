@@ -1,8 +1,8 @@
 import '@/styles/globals.css'
-
+import "../utils/apiFeature"
 const App = ({ Component, pageProps }) => {
   <div>
-    <Component {...pageProps} />    
+    <Component {...pageProps} />
   </div>
 };
 
