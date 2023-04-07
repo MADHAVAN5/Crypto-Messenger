@@ -6,7 +6,9 @@ import { MessengerContext } from '../context/MessengerContext';
 
 const Messenger = () => {
   const {} = useContext(MessengerContext);
-  return <div>hi</div>;
+  return <h1 className="text-3xl font-bold underline">
+      Hello world!
+    </h1>;
 };
 
 export default Messenger;
