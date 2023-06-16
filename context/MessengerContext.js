@@ -8,17 +8,17 @@ import { CheckIfWalletConnected, connectWallet, connectWithContract } from '../u
 export const MessengerContext = React.createContext();
 
 export const MessengerProvider = ({ children }) => {
-    const [account, setAccount] = useState('');
-    const [userName, setUserName] = useState('');
-    const [friendLists, setFriendLists] = useState([]);
-    const [friendMsg, setFriendMsg] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [userList, setUserList] = useState([]);
-    const [error, setError] = useState('');
+    const [account, setaccount] = useState('');
+    const [userName, setuserName] = useState('');
+    const [friendLists, setfriendLists] = useState([]);
+    const [friendMsg, setfriendMsg] = useState([]);
+    const [loading, setloading] = useState(false);
+    const [userList, setuserList] = useState([]);
+    const [error, seterror] = useState('');
 
     //chat user data
-    const [currentUserName, setCurrentUserName] = useState('');
-    const [currentUserAddress, setCurrentUserAddress] = useState('');
+    const [currentUserName, setcurrentUserName] = useState('');
+    const [currentUserAddress, setcurrentUserAddress] = useState('');
 
     const router = useRouter();
 
@@ -29,18 +29,18 @@ export const MessengerProvider = ({ children }) => {
             const contract = await connectWithContract();
             //get account
             const connectAccount = await connectWallet();
-            setAccount(connectAccount);
+            setaccount(connectAccount);
             //get user name
             const userName = await contract.getUser(connectAccount);
-            setUserName(userName);
+            setuserName(userName);
             //get my friend list
             const friendLists = await contract.getMyFriendList();
-            setFriendLists(friendLists);
+            setfriendLists(friendLists);
             //get all app user list
             const userList = await contract.getAllAppUsers();
-            setUserList(userList);
+            setuserList(userList);
         } catch (error) {
-            setError("Please Install And Your Wallet");
+            seterror("Please Install And Your Wallet");
         }
     };
 
@@ -54,42 +54,42 @@ export const MessengerProvider = ({ children }) => {
         try {
             const contract = await connectWithContract();
             const read = await contract.readMessage(friendAddress);
-            setFriendMsg(read);
+            setfriendMsg(read);
         } catch (error) {
-            setError("Currently You Have no Message");
+            seterror("Currently You Have no Message");
         }
     };
 
     //create account
     const createAccount = async ({ name, accountAddress }) => {
         try {
-            if (name || accountAddress) return setError("Name and AccountAddress, cannot be emty");
+            if (name || accountAddress) return seterror("Name and AccountAddress, cannot be emty");
 
             const contract = await connectWithContract();
             const getCreatedUser = await contract.CreateAccount(name);
-            setLoading(true);
+            setloading(true);
             await getCreatedUser.wait();
-            setLoading(false);
+            setloading(false);
             window.location.reload();
         } catch (error) {
-            setError("Error while creating your account please reload")
+            seterror("Error while creating your account please reload")
         }
     };
 
     //add your friends
     const addFriends = async ({ name, accountAddress }) => {
         try {
-            if (name || accountAddress) return setError("Please provide")
+            if (name || accountAddress) return seterror("Please provide")
 
             const contract = await connectWithContract();
             const addMyFriend = await contract.addFriend(accountAddress, name);
-            setLoading(true)
+            setloading(true)
             await addMyFriend.wait()
-            setLoading(false);
+            setloading(false);
             router.push("/");
             window.location.reload();
         } catch (error) {
-            setError("Something went wrong while adding friends, try again");
+            seterror("Something went wrong while adding friends, try again");
         }
     };
 
@@ -97,16 +97,16 @@ export const MessengerProvider = ({ children }) => {
 
     const sendMessage = async ({ msg, address }) => {
         try {
-            if (msg || address) return setError("Please Type your Message");
+            if (msg || address) return seterror("Please Type your Message");
 
             const contract = await connectWithContract();
             const addMessage = await contract.sendMessage(address, msg);
-            setLoading(true);
+            setloading(true);
             await addMessage.wait();
-            setLoading(false);
+            setloading(false);
             window.location.reload();
         } catch (error) {
-            setError("Please reload and try again");
+            seterror("Please reload and try again");
         }
     };
 
@@ -115,8 +115,8 @@ export const MessengerProvider = ({ children }) => {
     const readUser = async (userAddress) => {
         const contract = await connectWithContract();
         const userName = await contract.getUser(userAddress);
-        setCurrentUserName(userName);
-        setCurrentUserAddress(userAddress);
+        setcurrentUserName(userName);
+        setcurrentUserAddress(userAddress);
     };
 
     return (

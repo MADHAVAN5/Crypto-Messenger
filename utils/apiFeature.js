@@ -11,6 +11,7 @@ export const CheckIfWalletConnected = async () => {
         });
 
         const firstAccount = accounts[0];
+        return firstAccount;
     } catch (error) {
         console.log("Install Matamask");
     }
@@ -19,9 +20,7 @@ export const CheckIfWalletConnected = async () => {
 export const connectWallet = async() => {
     try {
         if (!window.ethereum) return console.log("Install Matamask");
-        const accounts = await window.ethereum.request({
-            method: "eth_requestAccounts",
-        });
+        const accounts = await window.ethereum.request({method:'eth_requestAccounts'});
         const firstAccount = accounts[0];
         return firstAccount;
     } catch (error) {
@@ -29,14 +28,14 @@ export const connectWallet = async() => {
     }
 };
 
-const fetchContract = (signerOrProvider) => new ethers.Contract(MessengerABI, MessengerAddress, signerOrProvider);
+const fetchContract = (signerOrProvider) => new ethers.Contract(MessengerAddress, MessengerABI, signerOrProvider);
 
 export const connectWithContract = async () => {
     try {
         const web3modal = new Web3Modal();
         const connection = await web3modal.connect();
-        const provider = new ethers.provider.Web3Modal(connection);
-        const signer = provider.getSigner();
+        const providers = new ethers.providers.Web3Provider(connection);
+        const signer = providers.getSigner();
         const contract = fetchContract(signer);
 
         return contract;
